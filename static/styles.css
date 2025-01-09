@@ -1,0 +1,269 @@
+/* Centraliza todos os elementos na página */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+/* Estilo do título */
+h1 {
+    margin-bottom: 10px;
+}
+
+/* Estilo do parágrafo */
+p {
+    margin: 10px 0;
+}
+
+/* Estilo do campo de entrada */
+input {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Estilo do botão */
+button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Efeito hover no botão */
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo da área de resultados */
+#result {
+    margin-top: 20px;
+    text-align: center;
+}
+#result-table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 300px; /* Ajuste a largura conforme necessário */
+}
+
+#result-table th, #result-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+#result-table th {
+    background-color: #f0f0f0;
+}
+#result-table td:nth-child(2) {
+    text-align: center;
+}
+.centralizar-texto {
+    text-align: center;
+}
+#result-table th {
+    text-align: center;
+}
+body {
+    text-align: center; /* Centraliza o conteúdo da home page */
+}
+
+a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Cor de fundo verde */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+a:hover {
+    background-color: #367c39; /* Cor de fundo um pouco mais escura no hover */
+}
+button:first-of-type { /* Seleciona o primeiro botão (botão "Enviar") */
+    margin-right: 10px; /* Adiciona uma margem direita de 10 pixels */
+}
+button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Home") */
+    margin-left: 10px; /* Adiciona uma margem esquerda de 10 pixels */
+}
+.botoes {
+    display: flex;
+    gap: 10px; /* Espaço entre os itens */
+}
+/* ... seus estilos existentes ... */
+
+#botao-voltar {
+    background-color: #4CAF50; /* Cor de fundo verde */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Espaço acima do botão */
+    display: block; /* Faz o botão ocupar a largura total */
+    margin-left: auto;
+    margin-right: auto; /* Centraliza o botão */
+}
+
+#botao-voltar:hover {
+    background-color: #367c39; /* Cor de fundo um pouco mais escura no hover */
+}
+#result-table th:nth-child(3), /* Seleciona o terceiro th (cabeçalho da coluna Verificação) */
+#result-table td:nth-child(3) { /* Seleciona o terceiro td (células da coluna Verificação) */
+    width: 100px; /* Defina a largura que desejar */
+    text-align: center;
+}
+/* ... outros estilos ... */
+
+#result-table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 300px; /* Ajuste a largura conforme necessário */
+}
+
+#result-table th, #result-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+#result-table th {
+    background-color: #f0f0f0;
+}
+
+#result-table th:nth-child(3), /* Seleciona o terceiro th (cabeçalho da coluna Verificação) */
+#result-table td:nth-child(3) { /* Seleciona o terceiro td (células da coluna Verificação) */
+    width: 100px; /* Defina a largura que desejar */
+    text-align: center;
+}
+
+/* Estilos para alternar cores das linhas */
+#result-table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+#result-table tbody tr:nth-child(even) {
+  background-color: #ffffff; /* Ou um tom de cinza mais claro, se preferir */
+}
+
+/* Efeito hover */
+#result-table tbody tr:hover {
+  background-color: #cce0ff;
+}
+/* ... seus estilos atuais ... */
+
+#result-table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 300px; /* Ajuste a largura conforme necessário */
+}
+
+#result-table th, #result-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+#result-table th {
+    background-color: #f0f0f0;
+}
+
+#result-table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2; /* Cor de fundo para linhas ímpares */
+}
+
+#result-table tbody tr:nth-child(even) {
+  background-color: #e6e6e6; /* Cor de fundo para linhas pares */
+}
+
+/* Efeito hover */
+#result-table tbody tr:hover {
+  background-color: #cce0ff;
+}
+
+.centralizar-texto {
+    text-align: center;
+}
+
+button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Home") */
+    margin-left: 10px; /* Adiciona uma margem esquerda de 10 pixels */
+    background-color: #4CAF50; /* Cor de fundo verde */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+/* ... seus estilos existentes ... */
+.botoes {
+    display: flex;
+    gap: 10px; /* Espaço entre os itens */
+    justify-content: center; /* Centraliza os botões */
+}
+
+#tabela-centralizada{
+    display: flex;
+    justify-content: center;
+}
+/* ... seus estilos existentes ... */
+
+.centralizar-botao {
+    text-align: center; /* Centraliza o botão */
+    margin-top: 20px; /* Adiciona um espaço acima do botão */
+}
+#result-table th,
+#result-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center; /* Centraliza o texto na tabela */
+}
+
+#botao-voltar {
+    background-color: #4CAF50; /* Cor de fundo verde */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Espaço acima do botão */
+}
+/* ... seus estilos atuais ... */
+
+.result-message {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px; /* Espaço entre o resultado e o botão */
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.alert-sorteado {
+    background-color: #e0ffe0; /* Fundo verde claro para sequência sorteada */
+    border-color: #a0d0a0; /* Borda verde mais escura */
+}
+
+.alert-nao-sorteado {
+    background-color: #ffe0e0; /* Fundo vermelho claro para sequência nunca sorteada */
+    border-color: #d0a0a0; /* Borda vermelha mais escura */
+}
+
+.result-message strong { /* Estilo para a sequência de números */
+    font-size: 18px;
+}
+
+.centralizar-botao {
+    text-align: center; /* Centraliza o botão */
+    margin-top: 20px; /* Adiciona um espaço acima do botão */
+}

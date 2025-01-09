@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Números Faltantes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        async function verificarNumeros() {
+            const input = document.getElementById("numeros").value.trim();
+            const numbers = input ? input.split(/[\s\t]+/).map(Number) : [];
+
+            if (numbers.length !== 15) {
+                document.getElementById("result").innerHTML = `<p style="color: red;">Erro: Você deve inserir exatamente 15 números.</p>`;
+                return;
+            }
+
+            const response = await fetch("/numeros-faltantes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ numbers: numbers }),
+            });
+
+            const result = await response.json();
+            const resultDiv = document.getElementById("result");
+            const resultTable = document.getElementById("result-table");
+
+            if (response.ok) {
+                // Limpa a tabela antes de adicionar novos resultados
+                const tbody = resultTable.querySelector("tbody");
+                tbody.innerHTML = "";
+
+                // Preenche a tabela com os números faltantes
+                result.missing.forEach(number => {
+                  const row = tbody.insertRow();
+                  const cell = row.insertCell();
+                  cell.textContent = number;
+                  cell.classList.add("centralizar-texto");
+                });
+
+                resultTable.style.display = "table";
+            } else {
+                resultTable.style.display = "none";
+                resultDiv.innerHTML = `<p style="color: red;">Erro: ${result.error}</p>`;
+            }
+        }
+
+        // Função para redirecionar para a página inicial
+        function voltarParaHome() {
+            window.location.href = "/";
+        }
+
+        // Adiciona um event listener para a tecla "Enter" no input
+        document.addEventListener("DOMContentLoaded", function() {
+            const inputNumeros = document.getElementById("numeros");
+            inputNumeros.addEventListener("keyup", function(event) {
+                if (event.key === "Enter") {
+                    verificarNumeros();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Verificar Números Faltantes (1-25)</h1>
+    <p>Digite 15 números (entre 1 e 25 separados por espaço ou tabulação):</p>
+    <input type="text" id="numeros">
+    <div class="botoes">
+        <button onclick="verificarNumeros()">Verificar</button>
+        
+    </div>
+    <div id="tabela-centralizada">
+        <table id="result-table" style="display: none;">
+            <thead>
+            <tr>
+                <th class="centralizar-texto">Números Faltantes</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="result"></div>
+    <div class="centralizar-botao">
+        <button onclick="voltarParaHome()" id="botao-voltar">Voltar para a Home</button>
+    </div>
+    
+</body>
+</html>
