@@ -5,92 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificar Números</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script>
-        async function processSequence() {
-            const input = document.getElementById("sequence").value.trim();
-            const numbers = input ? input.split(/[\s\t]+/).map(Number) : [];
-
-            const response = await fetch("/process", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ sequence: numbers }), // Envia a sequência como array
-            });
-
-            const result = await response.json();
-            const resultTable = document.getElementById("result-table");
-
-            if (response.ok) {
-                document.getElementById("pares").textContent = result.pares;
-                document.getElementById("impares").textContent = result.impares;
-                document.getElementById("primos").textContent = result.primos;
-                document.getElementById("fibonacci").textContent = result.fibonacci;
-                document.getElementById("multiplos3").textContent = result.multiplos3;
-                document.getElementById("soma").textContent = result.soma;
-
-                // Verificação dos critérios
-                document.getElementById("verificacao-pares").textContent = (result.pares >= 6 && result.pares <= 9) ? "OK" : "Não OK";
-                document.getElementById("verificacao-impares").textContent = (result.impares >= 6 && result.impares <= 9) ? "OK" : "Não OK";
-                document.getElementById("verificacao-primos").textContent = (result.primos >= 4 && result.primos <= 6) ? "OK" : "Não OK";
-                document.getElementById("verificacao-fibonacci").textContent = (result.fibonacci >= 3 && result.fibonacci <= 5) ? "OK" : "Não OK";
-                document.getElementById("verificacao-multiplos3").textContent = (result.multiplos3 >= 4 && result.multiplos3 <= 6) ? "OK" : "Não OK";
-                document.getElementById("verificacao-soma").textContent = result.soma >= 172 ? "OK" : "Não OK";
-
-
-                resultTable.style.display = "table"; // Mostra a tabela
-            } else {
-                resultTable.style.display = "none"; // Mantém a tabela oculta
-                // Adiciona uma mensagem de erro em um local separado, se necessário
-                const resultDiv = document.getElementById("result"); // Cria ou usa uma div para erros
-                resultDiv.innerHTML = `<p style="color: red;">Erro: ${result.error}</p>`;
-            }
-        }
-
-        // Função para redirecionar para a página inicial
-        function voltarParaHome() {
-            window.location.href = "/";
-        }
-
-        // Adiciona um event listener para a tecla "Enter" no input
-        document.addEventListener("DOMContentLoaded", function() {
-            const inputSequence = document.getElementById("sequence");
-            inputSequence.addEventListener("keyup", function(event) {
-                if (event.key === "Enter") {
-                    processSequence();
-                }
-            });
-        });
-
-        async function checkLotofacil() {
-            const input = document.getElementById("sequence").value.trim();
-            const numbers = input ? input.split(/[\s\t]+/).map(Number) : [];
-
-            if (numbers.length !== 15) {
-                alert("A sequência da Lotofácil deve conter exatamente 15 números.");
-                return;
-            }
-
-            const response = await fetch("/check-lotofacil", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ sequence: numbers }),
-            });
-
-            const result = await response.json();
-            // Exibe o resultado na div 'lotofacil-result'
-            document.getElementById("lotofacil-result").innerText = result.message;
-        }
-    </script>
 </head>
 <body>
     <h1>Verificar Números</h1>
-    <p>Digite uma sequência de números separados por espaço:</p>
+    <p>Digite uma sequência de números separados por espaço ou tabulação:</p>
     <input type="text" id="sequence" placeholder="Exemplo: 1 2 3 4 5">
-    <button onclick="processSequence()">Enviar</button>
-    <table id="result-table" style="display: none;">
+    <div class="botoes">
+        <button onclick="processSequence()">Enviar</button>
+        <button onclick="checkLotofacil()" id="botao-verificar-lotofacil">Verificar Lotofácil</button>
+    </div>
+    
+    <table id="result-table" class="tabela-destaque">
         <thead>
             <tr>
                 <th>Categoria</th>
@@ -131,6 +56,116 @@
             </tr>
         </tbody>
     </table>
-    <div id="lotofacil-result"></div> <button id="botao-voltar" onclick="voltarParaHome()">Voltar para a Home</button> <div id="result"></div>
+    <div id="lotofacil-result" class="lotofacil-result-container"></div>
+    <button id="botao-voltar" onclick="voltarParaHome()">Voltar para a Home</button>
+    </div>
+    <script>
+        async function processSequence() {
+            const input = document.getElementById("sequence").value.trim();
+            const numbers = input ? input.split(/[\s\t]+/).map(Number) : [];
+
+            // Validação dos números
+            if (numbers.some(isNaN) || numbers.some(num => num < 1 || num > 25)) {
+                document.getElementById("result").innerHTML = `<p class="error-message">Erro: A sequência deve conter apenas números entre 1 e 25.</p>`;
+                return;
+            }
+
+            const response = await fetch("/process", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ sequence: numbers }),
+            });
+
+            const result = await response.json();
+            const resultTable = document.getElementById("result-table");
+
+            if (response.ok) {
+                document.getElementById("pares").textContent = result.pares;
+                document.getElementById("impares").textContent = result.impares;
+                document.getElementById("primos").textContent = result.primos;
+                document.getElementById("fibonacci").textContent = result.fibonacci;
+                document.getElementById("multiplos3").textContent = result.multiplos3;
+                document.getElementById("soma").textContent = result.soma;
+
+                // Verificação dos critérios
+                document.getElementById("verificacao-pares").textContent = (result.pares >= 6 && result.pares <= 9) ? "OK" : "Não OK";
+                document.getElementById("verificacao-impares").textContent = (result.impares >= 6 && result.impares <= 9) ? "OK" : "Não OK";
+                document.getElementById("verificacao-primos").textContent = (result.primos >= 4 && result.primos <= 6) ? "OK" : "Não OK";
+                document.getElementById("verificacao-fibonacci").textContent = (result.fibonacci >= 4 && result.fibonacci <= 5) ? "OK" : "Não OK";
+                document.getElementById("verificacao-multiplos3").textContent = (result.multiplos3 >= 4 && result.multiplos3 <= 5) ? "OK" : "Não OK";
+                document.getElementById("verificacao-soma").textContent = result.soma >= 172 ? "OK" : "Não OK";
+
+                resultTable.style.display = "table";
+                document.getElementById("result").innerHTML = ""; // Limpa mensagens de erro anteriores
+            } else {
+                resultTable.style.display = "none";
+                document.getElementById("result").innerHTML = `<p class="error-message">Erro: ${result.error}</p>`;
+            }
+        }
+
+        function voltarParaHome() {
+            window.location.href = "/";
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const inputSequence = document.getElementById("sequence");
+            inputSequence.addEventListener("keyup", function(event) {
+                if (event.key === "Enter") {
+                    processSequence();
+                }
+            });
+        });
+
+        async function checkLotofacil() {
+            const input = document.getElementById("sequence").value.trim();
+            const numbers = input ? input.split(/[\s\t]+/).map(Number) : [];
+
+            // Validação dos números
+            if (numbers.length !== 15) {
+                exibirErroLotofacil('A sequência da Lotofácil deve conter exatamente 15 números.');
+                return;
+            }
+            if (numbers.some(isNaN) || numbers.some(num => num < 1 || num > 25)) {
+                exibirErroLotofacil('Erro: A sequência deve conter apenas números entre 1 e 25.');
+                return;
+            }
+
+            const response = await fetch("/check-lotofacil", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ sequence: numbers }),
+            });
+
+            const result = await response.json();
+            exibirResultadoLotofacil(result, numbers);
+        }
+        function exibirErroLotofacil(mensagem) {
+            const resultDiv = document.getElementById("lotofacil-result");
+            resultDiv.innerHTML = `<p class="error-message">${mensagem}</p>`;
+        }
+
+        function exibirResultadoLotofacil(result, numbers) {
+            const resultDiv = document.getElementById("lotofacil-result");
+            let message = "";
+
+            if (result.message.includes("nunca foi sorteada")) {
+                message = `<div class="result-message alert-nao-sorteado">
+                                <p>A sequência <strong>${numbers.join(", ")}</strong> nunca foi sorteada.</p>
+                            </div>`;
+            } else {
+                const concurso = result.message.match(/concurso (\d+)/)[1];
+                const sequencia = result.message.match(/A sequência ([\d, ]+)/)[1];
+                message = `<div class="result-message alert-sorteado">
+                                <p>A sequência <strong>${sequencia}</strong> já foi sorteada no concurso <strong>${concurso}</strong>.</p>
+                            </div>`;
+            }
+
+            resultDiv.innerHTML = message;
+        }
+    </script>
 </body>
 </html>

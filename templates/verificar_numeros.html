@@ -10,8 +10,13 @@
             const input = document.getElementById("numeros").value.trim();
             const numbers = input ? input.split(/[\s\t]+/).map(Number) : [];
 
+            // Validação dos números
             if (numbers.length !== 15) {
-                document.getElementById("result").innerHTML = `<p style="color: red;">Erro: Você deve inserir exatamente 15 números.</p>`;
+                document.getElementById("result").innerHTML = `<p class="error-message">Erro: Você deve inserir exatamente 15 números.</p>`;
+                return;
+            }
+            if (numbers.some(isNaN) || numbers.some(num => num < 1 || num > 25)) {
+                document.getElementById("result").innerHTML = `<p class="error-message">Erro: Todos os números devem estar entre 1 e 25.</p>`;
                 return;
             }
 
@@ -34,25 +39,24 @@
 
                 // Preenche a tabela com os números faltantes
                 result.missing.forEach(number => {
-                  const row = tbody.insertRow();
-                  const cell = row.insertCell();
-                  cell.textContent = number;
-                  cell.classList.add("centralizar-texto");
+                    const row = tbody.insertRow();
+                    const cell = row.insertCell();
+                    cell.textContent = number;
+                    cell.classList.add("centralizar-texto");
                 });
 
                 resultTable.style.display = "table";
+                document.getElementById("result").innerHTML = "";
             } else {
                 resultTable.style.display = "none";
-                resultDiv.innerHTML = `<p style="color: red;">Erro: ${result.error}</p>`;
+                resultDiv.innerHTML = `<p class="error-message">Erro: ${result.error}</p>`;
             }
         }
 
-        // Função para redirecionar para a página inicial
         function voltarParaHome() {
             window.location.href = "/";
         }
 
-        // Adiciona um event listener para a tecla "Enter" no input
         document.addEventListener("DOMContentLoaded", function() {
             const inputNumeros = document.getElementById("numeros");
             inputNumeros.addEventListener("keyup", function(event) {
@@ -69,10 +73,9 @@
     <input type="text" id="numeros">
     <div class="botoes">
         <button onclick="verificarNumeros()">Verificar</button>
-        
     </div>
     <div id="tabela-centralizada">
-        <table id="result-table" style="display: none;">
+        <table id="result-table" class="tabela-combinacoes">
             <thead>
             <tr>
                 <th class="centralizar-texto">Números Faltantes</th>
@@ -84,6 +87,7 @@
     </div>
 
     <div id="result"></div>
+
     <div class="centralizar-botao">
         <button onclick="voltarParaHome()" id="botao-voltar">Voltar para a Home</button>
     </div>

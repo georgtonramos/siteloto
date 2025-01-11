@@ -6,41 +6,57 @@
     <title>Verificar Sorteio Lotofácil</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
+        function formatarMensagem(result, numbers) {
+            if (result.message.includes("nunca foi sorteada")) {
+                return `<div class="result-message alert-nao-sorteado">
+                            <p>A sequência <strong>${numbers.join(", ")}</strong> nunca foi sorteada.</p>
+                        </div>`;
+            } else {
+                const concurso = result.message.match(/concurso (\d+)/)[1];
+                return `<div class="result-message alert-sorteado">
+                            <p>A sequência <strong>${numbers.join(", ")}</strong> já foi sorteada no concurso <strong>${concurso}</strong>.</p>
+                        </div>`;
+            }
+        }
+
         async function checkLotofacil() {
             const input = document.getElementById("numeros").value.trim();
             const numbers = input ? input.split(/[\s\t]+/).map(Number) : [];
             const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = ""; // Limpa mensagens de erro anteriores
 
             if (numbers.length !== 15) {
-                resultDiv.innerHTML = `<p style="color: red;">Erro: A sequência da Lotofácil deve conter exatamente 15 números.</p>`;
+                resultDiv.innerHTML = `<p class="error-message">Erro: A sequência da Lotofácil deve conter exatamente 15 números.</p>`;
                 return;
             }
 
-            const response = await fetch("/check-lotofacil", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ sequence: numbers }),
-            });
-
-            const result = await response.json();
-
-            // Formata a mensagem
-            let message = "";
-            if (result.message.includes("nunca foi sorteada")) {
-                message = `<div class="result-message alert-nao-sorteado">
-                            <p>A sequência <strong>${numbers.join(", ")}</strong> nunca foi sorteada.</p>
-                        </div>`;
-            } else {
-                // Extrai o número do concurso da mensagem
-                const concurso = result.message.match(/concurso (\d+)/)[1]; // Expressão regular modificada
-                message = `<div class="result-message alert-sorteado">
-                            <p>A sequência <strong>${numbers.join(", ")}</strong> já foi sorteada no concurso <strong>${concurso}</strong>.</p>
-                        </div>`;
+            if (numbers.some(num => isNaN(num) || num < 1 || num > 25)) {
+                resultDiv.innerHTML = `<p class="error-message">Erro: A sequência deve conter apenas números entre 1 e 25.</p>`;
+                return;
             }
 
-            resultDiv.innerHTML = message;
+            try {
+                const response = await fetch("/check-lotofacil", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ sequence: numbers }),
+                });
+
+                // Verifica se a resposta da requisição está OK (status code 200-299)
+                if (!response.ok) {
+                    throw new Error('Erro na requisição ao servidor.');
+                }
+
+                const result = await response.json();
+                const message = formatarMensagem(result, numbers);
+                resultDiv.innerHTML = message;
+
+            } catch (error) {
+                console.error(error);
+                resultDiv.innerHTML = `<p class="error-message">Erro: Ocorreu um erro ao verificar a sequência. Tente novamente mais tarde.</p>`;
+            }
         }
 
         function voltarParaHome() {
@@ -62,7 +78,7 @@
     <p>Digite 15 números (entre 1 e 25 separados por espaço ou tabulação):</p>
     <input type="text" id="numeros">
     <button onclick="checkLotofacil()">Verificar</button>
-    
+
     <div id="result"></div>
 
     <div class="centralizar-botao">

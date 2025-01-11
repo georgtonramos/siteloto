@@ -12,12 +12,12 @@ body {
 
 /* Estilo do título */
 h1 {
-    margin-bottom: 10px;
+    margin-bottom: 5px; /* reduz a margem inferior */
 }
 
 /* Estilo do parágrafo */
 p {
-    margin: 10px 0;
+    margin: 5px 0; /* reduz a margem superior e inferior */
 }
 
 /* Estilo do campo de entrada */
@@ -51,13 +51,15 @@ button:hover {
     margin-top: 20px;
     text-align: center;
 }
+
 #result-table {
     margin-top: 20px;
     border-collapse: collapse;
     width: 300px; /* Ajuste a largura conforme necessário */
 }
 
-#result-table th, #result-table td {
+#result-table th,
+#result-table td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
@@ -66,15 +68,19 @@ button:hover {
 #result-table th {
     background-color: #f0f0f0;
 }
+
 #result-table td:nth-child(2) {
     text-align: center;
 }
+
 .centralizar-texto {
     text-align: center;
 }
+
 #result-table th {
     text-align: center;
 }
+
 body {
     text-align: center; /* Centraliza o conteúdo da home page */
 }
@@ -92,16 +98,43 @@ a {
 a:hover {
     background-color: #367c39; /* Cor de fundo um pouco mais escura no hover */
 }
-button:first-of-type { /* Seleciona o primeiro botão (botão "Enviar") */
+
+button:first-of-type {
+    /* Seleciona o primeiro botão (botão "Enviar") */
     margin-right: 10px; /* Adiciona uma margem direita de 10 pixels */
 }
-button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Home") */
+
+button:nth-of-type(2) {
+    /* Seleciona o segundo botão (botão "Voltar para a Home") */
     margin-left: 10px; /* Adiciona uma margem esquerda de 10 pixels */
 }
+
 .botoes {
     display: flex;
     gap: 10px; /* Espaço entre os itens */
+    justify-content: center; /* Centraliza os botões */
+    flex-wrap: wrap; /* Permite que os botões quebrem para a próxima linha se não houver espaço */
 }
+
+.botoes button {
+    padding: 10px; /* Ajuste o padding conforme necessário */
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    flex-grow: 1; /* Permite que os botões cresçam para ocupar o espaço disponível */
+    flex-basis: 150px; /* Define um tamanho base para os botões */
+    
+}
+
+#botao-verificar-lotofacil {
+    white-space: nowrap; /* Impede a quebra de linha do texto */
+    background-color: #4CAF50;
+    flex-grow: 1; /* Permite que o botão cresça */
+}
+
 /* ... seus estilos existentes ... */
 
 #botao-voltar {
@@ -120,11 +153,15 @@ button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Hom
 #botao-voltar:hover {
     background-color: #367c39; /* Cor de fundo um pouco mais escura no hover */
 }
-#result-table th:nth-child(3), /* Seleciona o terceiro th (cabeçalho da coluna Verificação) */
-#result-table td:nth-child(3) { /* Seleciona o terceiro td (células da coluna Verificação) */
+
+#result-table th:nth-child(3),
+/* Seleciona o terceiro th (cabeçalho da coluna Verificação) */
+#result-table td:nth-child(3) {
+    /* Seleciona o terceiro td (células da coluna Verificação) */
     width: 100px; /* Defina a largura que desejar */
     text-align: center;
 }
+
 /* ... outros estilos ... */
 
 #result-table {
@@ -133,7 +170,8 @@ button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Hom
     width: 300px; /* Ajuste a largura conforme necessário */
 }
 
-#result-table th, #result-table td {
+#result-table th,
+#result-table td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
@@ -143,25 +181,28 @@ button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Hom
     background-color: #f0f0f0;
 }
 
-#result-table th:nth-child(3), /* Seleciona o terceiro th (cabeçalho da coluna Verificação) */
-#result-table td:nth-child(3) { /* Seleciona o terceiro td (células da coluna Verificação) */
+#result-table th:nth-child(3),
+/* Seleciona o terceiro th (cabeçalho da coluna Verificação) */
+#result-table td:nth-child(3) {
+    /* Seleciona o terceiro td (células da coluna Verificação) */
     width: 100px; /* Defina a largura que desejar */
     text-align: center;
 }
 
 /* Estilos para alternar cores das linhas */
 #result-table tbody tr:nth-child(odd) {
-  background-color: #f2f2f2;
+    background-color: #f2f2f2;
 }
 
 #result-table tbody tr:nth-child(even) {
-  background-color: #ffffff; /* Ou um tom de cinza mais claro, se preferir */
+    background-color: #ffffff; /* Ou um tom de cinza mais claro, se preferir */
 }
 
 /* Efeito hover */
 #result-table tbody tr:hover {
-  background-color: #cce0ff;
+    background-color: #cce0ff;
 }
+
 /* ... seus estilos atuais ... */
 
 #result-table {
@@ -170,7 +211,8 @@ button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Hom
     width: 300px; /* Ajuste a largura conforme necessário */
 }
 
-#result-table th, #result-table td {
+#result-table th,
+#result-table td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
@@ -181,23 +223,24 @@ button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Hom
 }
 
 #result-table tbody tr:nth-child(odd) {
-  background-color: #f2f2f2; /* Cor de fundo para linhas ímpares */
+    background-color: #f2f2f2; /* Cor de fundo para linhas ímpares */
 }
 
 #result-table tbody tr:nth-child(even) {
-  background-color: #e6e6e6; /* Cor de fundo para linhas pares */
+    background-color: #e6e6e6; /* Cor de fundo para linhas pares */
 }
 
 /* Efeito hover */
 #result-table tbody tr:hover {
-  background-color: #cce0ff;
+    background-color: #cce0ff;
 }
 
 .centralizar-texto {
     text-align: center;
 }
 
-button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Home") */
+button:nth-of-type(2) {
+    /* Seleciona o segundo botão (botão "Voltar para a Home") */
     margin-left: 10px; /* Adiciona uma margem esquerda de 10 pixels */
     background-color: #4CAF50; /* Cor de fundo verde */
     color: white;
@@ -206,23 +249,26 @@ button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Hom
     border-radius: 5px;
     cursor: pointer;
 }
-/* ... seus estilos existentes ... */
-.botoes {
-    display: flex;
-    gap: 10px; /* Espaço entre os itens */
-    justify-content: center; /* Centraliza os botões */
-}
 
-#tabela-centralizada{
+/* ... seus estilos existentes ... */
+/*.botoes {
+/*    display: flex;
+/*    gap: 10px; /* Espaço entre os itens */
+/*    justify-content: center; /* Centraliza os botões */
+/*}*/
+
+#tabela-centralizada {
     display: flex;
     justify-content: center;
 }
+
 /* ... seus estilos existentes ... */
 
 .centralizar-botao {
-    text-align: center; /* Centraliza o botão */
-    margin-top: 20px; /* Adiciona um espaço acima do botão */
+    text-align: center;
+    margin-top: 10px; /* Reduz o espaço acima do botão */
 }
+
 #result-table th,
 #result-table td {
     border: 1px solid #ccc;
@@ -239,6 +285,7 @@ button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Hom
     cursor: pointer;
     margin-top: 10px; /* Espaço acima do botão */
 }
+
 /* ... seus estilos atuais ... */
 
 .result-message {
@@ -259,11 +306,219 @@ button:nth-of-type(2) { /* Seleciona o segundo botão (botão "Voltar para a Hom
     border-color: #d0a0a0; /* Borda vermelha mais escura */
 }
 
-.result-message strong { /* Estilo para a sequência de números */
+.result-message strong {
+    /* Estilo para a sequência de números */
     font-size: 18px;
 }
 
 .centralizar-botao {
     text-align: center; /* Centraliza o botão */
     margin-top: 20px; /* Adiciona um espaço acima do botão */
+}
+
+#result-table {
+    border-collapse: collapse;
+    width: 50%; /* Ajuste a largura conforme necessário */
+    margin: 20px auto; /* Centraliza a tabela */
+}
+
+#result-table th,
+#result-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+#result-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+#result-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+#result-table tbody tr:nth-child(even) {
+    background-color: #fff;
+}
+
+#result-table tbody tr:hover {
+    background-color: #f0f0f5; /* Um হালকা cinza mais escuro no hover */
+}
+
+.tabela-destaque {
+    border-collapse: collapse;
+    width: 500px;
+    margin: 0 auto; /* Remove a margem superior e inferior */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tabela-destaque th,
+.tabela-destaque td {
+    border: none;
+    padding: 5px; /* Reduz o padding */
+    text-align: left;
+}
+
+.tabela-destaque th {
+    background-color: #e6e6fa; /* FUNDO AZULADO */
+    color: #000; /* COR DA FONTE PRETO */
+    font-weight: bold;
+    text-align: center;
+}
+
+.tabela-destaque tbody tr {
+    background-color: #f2f2f2; /* Cor de fundo para linhas ímpares */
+    border-bottom: 2px solid #000;
+}
+
+.tabela-destaque tbody td {
+    text-align: center;
+}
+
+.centralizar-texto {
+    text-align: center;
+}
+
+button:first-of-type {
+    margin-right: 10px; /* Adiciona uma margem direita de 10 pixels */
+    margin-bottom: 15px;
+}
+
+.tabela-destaque tbody tr:hover {
+    background-color: #cce0ff; /* Um হালকা cinza mais escuro no hover */
+}
+
+/* Estilos para a div de resultado da Lotofácil */
+/*#lotofacil-result {*/
+/*    margin-top: 10px; /* Reduz o espaço acima da div */*/
+/*    margin-bottom: 10px; /* Reduz o espaço abaixo da div */*/
+/*}*/
+
+.lotofacil-result-container {
+    margin-top: 10px; /* Reduz o espaço acima da div */
+    margin-bottom: 10px; /* Reduz o espaço abaixo da div */
+}
+
+.tabela-combinacoes {
+    border-collapse: collapse;
+    width: 50%; /* Ajuste a largura conforme necessário */
+    margin: 20px auto; /* Centraliza a tabela */
+}
+
+.tabela-combinacoes th,
+.tabela-combinacoes td {
+    border: none; /* Remove as bordas */
+    padding: 10px;
+    text-align: center;
+}
+
+.tabela-combinacoes th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.tabela-combinacoes tbody tr {
+    background-color: #f9f9f9; /* Cor de fundo para linhas ímpares */
+}
+
+.tabela-combinacoes tbody td {
+    text-align: center;
+    font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
+    color: #000; /* Cor da fonte */
+}
+
+.tabela-combinacoes tbody tr:nth-child(even) {
+    background-color: #fff; /* Cor de fundo para linhas pares */
+}
+
+.tabela-combinacoes tbody tr:hover {
+    background-color: #f0f0f5; /* Um হালকা cinza mais escuro no hover */
+}
+
+/* Estilos para o título da tabela */
+#result h2 {
+    text-align: center;
+    margin-bottom: 10px; /* Espaço entre o título e a tabela */
+    font-size: 20px; /* Ajuste o tamanho da fonte conforme necessário */
+    color: #000; /* Cor da fonte */
+}
+
+/* ... seus estilos atuais ... */
+
+.tabela-destaque {
+    border-collapse: collapse;
+    width: 500px; /* Ajuste a largura conforme necessário */
+    margin: 20px auto; /* Centraliza a tabela */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra ao redor da tabela */
+}
+
+.tabela-destaque th,
+.tabela-destaque td {
+    border: none; /* Remove as bordas */
+    padding: 10px;
+    text-align: left;
+}
+
+.tabela-destaque th {
+    background-color: #e0e0e0; /* Fundo cinza claro */
+    color: #000; /* Cor da fonte preto */
+    font-weight: bold;
+    text-align: center; /* Centraliza o texto do cabeçalho */
+}
+
+.tabela-destaque tbody tr {
+    background-color: #f9f9f9; /* Cor de fundo para linhas ímpares */
+    border-bottom: 1px solid #ccc; /* Linha separadora entre as linhas */
+}
+
+.tabela-destaque tbody td {
+    text-align: center;
+}
+
+.centralizar-texto {
+    text-align: center;
+}
+
+button:first-of-type {
+    margin-right: 10px; /* Adiciona uma margem direita de 10 pixels */
+    margin-bottom: 15px;
+}
+
+.tabela-destaque tbody tr:hover {
+    background-color: #cce0ff; /* Um হালকা cinza mais escuro no hover */
+}
+
+/* Estilos para a div de resultado da Lotofácil */
+#lotofacil-result {
+    margin-top: 20px; /* Espaço acima da div */
+}
+
+/* ... seus estilos atuais ... */
+
+.tabela-combinacoes tbody td {
+    text-align: center;
+    font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
+    color: #000; /* Cor da fonte */
+    white-space: nowrap; /* Impede a quebra de linha */
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+ul {
+    list-style-type: none; /* Removendo os marcadores */
+    padding: 0; /* Removendo o padding padrão da lista */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Espaço entre os links */
+}
+.links-container {
+    display: flex;
+    flex-direction: column; /* Define a direção dos itens como coluna (vertical) */
+    align-items: center;    /* Centraliza os itens horizontalmente */
+    gap: 10px;             /* Espaço entre os links */
 }
