@@ -2,23 +2,26 @@ from flask import Blueprint, request, jsonify, render_template
 from utils import generate_combinations, format_numbers, is_even, is_odd, is_prime, is_multiple_of_3, is_fibonacci
 from lotofacil import check_sequence, load_lottery_data, check_columns
 import pandas as pd
+import requests
 
 main_routes = Blueprint('main_routes', __name__)
 
-# Carrega os dados da Lotofácil (fora da rota para carregar apenas uma vez)
-file_path = 'LotoV7.xlsx'  # Coloque o caminho correto para o seu arquivo
-sheet_name = 'LOTOFaCIL'
-bola_columns = ['Bola1', 'Bola2', 'Bola3', 'Bola4', 'Bola5', 'Bola6', 'Bola7', 'Bola8', 'Bola9', 'Bola10', 'Bola11', 'Bola12', 'Bola13', 'Bola14', 'Bola15']
+API_URL = "https://apilotofacil.georgton.tech"  # URL da API externa
 
-df = load_lottery_data(file_path, sheet_name)
+def fetch_lottery_data():
+    """
+    Busca os dados da loteria diretamente da API.
 
-# Verifica se o DataFrame foi carregado corretamente
-if df is None or not check_columns(df, bola_columns):
-    print("Erro ao carregar os dados da Lotofácil. Verifique o arquivo e a planilha.")
-    # Você pode decidir retornar um erro 500 aqui ou lidar de outra forma
-    # return jsonify({'error': 'Erro ao carregar dados da Lotofácil'}), 500
-else:
-    print("Dados da Lotofácil carregados com sucesso.")
+    Returns:
+        list: Lista de resultados da loteria retornados pela API, ou None em caso de erro.
+    """
+    try:
+        response = requests.get(f"{API_URL}/resultados")
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Erro ao conectar à API: {e}")
+        return None
 
 def contar_pares_impares_primos_fibonacci_multiplos3(numeros):
     """Conta os números pares, ímpares, primos, Fibonacci, múltiplos de 3 e soma."""
@@ -101,23 +104,32 @@ def numeros_faltantes():
 
 @main_routes.route('/check-lotofacil', methods=['POST'])
 def check_lotofacil():
+    """
+    Verifica se uma sequência de números foi sorteada.
+
+    Exemplo de entrada JSON:
+    {
+        "sequence": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    }
+    """
     data = request.get_json()
     sequence = data.get('sequence', [])
-
-    if df is None or not check_columns(df, bola_columns):
-        return jsonify({'error': 'Erro ao carregar ou validar os dados da Lotofácil'}), 500
 
     if len(sequence) != 15:
         return jsonify({'error': 'A sequência da Lotofácil deve conter exatamente 15 números.'}), 400
 
-    concurso = check_sequence(df, bola_columns, sequence)
+    # Busca os dados da API
+    lottery_data = fetch_lottery_data()
+    if not lottery_data:
+        return jsonify({'error': 'Erro ao buscar os dados da Lotofácil na API.'}), 500
 
-    if concurso != -1:
-        # Formata a sequência para exibição
-        formatted_sequence = format_numbers(sequence)
-        return jsonify({'message': f"A sequência {formatted_sequence} já foi sorteada no concurso {concurso}."})
-    else:
-        return jsonify({'message': f"A sequência {format_numbers(sequence)} nunca foi sorteada."})
+    # Verifica se a sequência está nos dados da API
+    sequence_sorted = sorted(sequence)
+    for result in lottery_data:
+        if sorted(result['numeros_sorteados']) == sequence_sorted:
+            return jsonify({'message': f"A sequência já foi sorteada no concurso {result['numero_concurso']}."})
+
+    return jsonify({'message': "A sequência nunca foi sorteada."})
     
 @main_routes.route('/verificar-sorteio')
 def verificar_sorteio_page():

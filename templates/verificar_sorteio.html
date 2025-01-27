@@ -6,35 +6,24 @@
     <title>Verificar Sorteio Lotofácil</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
-        function formatarMensagem(result, numbers) {
-            if (result.message.includes("nunca foi sorteada")) {
-                return `<div class="result-message alert-nao-sorteado">
-                            <p>A sequência <strong>${numbers.join(", ")}</strong> nunca foi sorteada.</p>
-                        </div>`;
-            } else {
-                const concurso = result.message.match(/concurso (\d+)/)[1];
-                return `<div class="result-message alert-sorteado">
-                            <p>A sequência <strong>${numbers.join(", ")}</strong> já foi sorteada no concurso <strong>${concurso}</strong>.</p>
-                        </div>`;
-            }
-        }
-
         async function checkLotofacil() {
             const input = document.getElementById("numeros").value.trim();
             const numbers = input ? input.split(/[\s\t]+/).map(Number) : [];
             const resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = ""; // Limpa mensagens de erro anteriores
-
+            const buttonDiv = document.getElementById("button-div");
+            resultDiv.innerHTML = ""; // Limpa mensagens anteriores
+            buttonDiv.innerHTML = ""; // Limpa o botão
+    
             if (numbers.length !== 15) {
-                resultDiv.innerHTML = `<p class="error-message">Erro: A sequência da Lotofácil deve conter exatamente 15 números.</p>`;
+                resultDiv.innerHTML = `<div class="result alert-nao-sorteado">Erro: A sequência deve conter exatamente 15 números.</div>`;
                 return;
             }
-
+    
             if (numbers.some(num => isNaN(num) || num < 1 || num > 25)) {
-                resultDiv.innerHTML = `<p class="error-message">Erro: A sequência deve conter apenas números entre 1 e 25.</p>`;
+                resultDiv.innerHTML = `<div class="result alert-nao-sorteado">Erro: Os números devem estar entre 1 e 25.</div>`;
                 return;
             }
-
+    
             try {
                 const response = await fetch("/check-lotofacil", {
                     method: "POST",
@@ -43,46 +32,39 @@
                     },
                     body: JSON.stringify({ sequence: numbers }),
                 });
-
-                // Verifica se a resposta da requisição está OK (status code 200-299)
+    
                 if (!response.ok) {
-                    throw new Error('Erro na requisição ao servidor.');
+                    throw new Error("Erro na requisição ao servidor.");
                 }
-
+    
                 const result = await response.json();
-                const message = formatarMensagem(result, numbers);
-                resultDiv.innerHTML = message;
-
+                const isSorteado = result.message.includes("já foi sorteada");
+    
+                resultDiv.innerHTML = `<div class="result ${
+                    isSorteado ? "alert-sorteado" : "alert-nao-sorteado"
+                }">${result.message}</div>`;
+                buttonDiv.innerHTML = `<button class="btn-voltar" onclick="window.location.href='/'">Voltar ao Início</button>`;
             } catch (error) {
                 console.error(error);
-                resultDiv.innerHTML = `<p class="error-message">Erro: Ocorreu um erro ao verificar a sequência. Tente novamente mais tarde.</p>`;
+                resultDiv.innerHTML = `<div class="result alert-nao-sorteado">Erro: Não foi possível verificar a sequência no momento. Tente novamente mais tarde.</div>`;
             }
         }
-
-        function voltarParaHome() {
-            window.location.href = "/";
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            const inputNumeros = document.getElementById("numeros");
-            inputNumeros.addEventListener("keyup", function(event) {
-                if (event.key === "Enter") {
-                    checkLotofacil();
-                }
-            });
-        });
     </script>
+
 </head>
 <body>
-    <h1>Verificar Sorteio Lotofácil</h1>
-    <p>Digite 15 números (entre 1 e 25 separados por espaço ou tabulação):</p>
-    <input type="text" id="numeros">
-    <button onclick="checkLotofacil()">Verificar</button>
-
-    <div id="result"></div>
-
-    <div class="centralizar-botao">
-        <button id="botao-voltar" onclick="voltarParaHome()">Voltar para a Home</button>
-    </div>
+    <header>
+        <h1>Verificar Sorteio Lotofácil</h1>
+    </header>
+    <main>
+        <p>Digite 15 números (entre 1 e 25 separados por espaço ou tabulação):</p>
+        <input type="text" id="numeros" placeholder="Exemplo: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15">
+        <button onclick="checkLotofacil()">Verificar</button>
+        <div id="result"></div>
+        <div id="button-div" class="button-container"></div>
+    </main>
+    <footer>
+        <p>API Lotofácil &copy; 2025. Todos os direitos reservados.</p>
+    </footer>
 </body>
 </html>
