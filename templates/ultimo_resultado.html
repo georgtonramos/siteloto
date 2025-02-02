@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Último Resultado da Lotofácil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Ajustes visuais personalizados */
+        h1 {
+            margin-bottom: 30px; /* Mais espaço entre o título e o conteúdo */
+        }
+        .resultado-lotofacil p {
+            margin: 10px 0;
+        }
+        .numeros-sorteados {
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .numero {
+            display: inline-flex;
+            align-items: center;    /* Centraliza verticalmente */
+            justify-content: center; /* Centraliza horizontalmente */
+            background-color: #f0f0f0;
+            margin: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Último Resultado da Lotofácil</h1>
+
+    <div class="resultado-lotofacil">
+        {# Converte a data do formato "yyyy-mm-dd" para "dd/mm/yyyy" #}
+        {% set parts = result['data_sorteio'].split('-') %}
+        {% set formatted_date = parts[2] ~ '/' ~ parts[1] ~ '/' ~ parts[0] %}
+        <p><strong>Data do Sorteio:</strong> {{ formatted_date }}</p>
+        <p><strong>Número do Concurso:</strong> {{ result['numero_concurso'] }}</p>
+        <p><strong>Números Sorteados:</strong></p>
+        <div class="numeros-sorteados">
+            {% for num in result['numeros_sorteados'] %}
+                <span class="numero">{{ num }}</span>
+                {% if loop.index % 5 == 0 %}
+                    <br>
+                {% endif %}
+            {% endfor %}<br>
+        </div>
+    </div>
+
+    <a href="/" class="btn-voltar">Voltar para a Home</a>
+</body>
+</html>

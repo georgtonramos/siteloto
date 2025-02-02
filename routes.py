@@ -8,15 +8,18 @@ main_routes = Blueprint('main_routes', __name__)
 
 API_URL = "https://apilotofacil.georgton.tech"  # URL da API externa
 
-def fetch_lottery_data():
+def fetch_lottery_data(endpoint="resultados"):
     """
     Busca os dados da loteria diretamente da API.
 
+    Args:
+        endpoint (str): Endpoint específico da API a ser consultado. Padrão: "resultados".
+        
     Returns:
-        list: Lista de resultados da loteria retornados pela API, ou None em caso de erro.
+        list ou dict: Dados retornados pela API, ou None em caso de erro.
     """
     try:
-        response = requests.get(f"{API_URL}/resultados")
+        response = requests.get(f"{API_URL}/{endpoint}")
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
@@ -157,3 +160,16 @@ def gerar_combinacoes_route():
 @main_routes.route('/gerar-combinacoes-page')
 def gerar_combinacoes_page():
     return render_template('gerar_combinacoes.html')
+
+@main_routes.route('/ultimo-resultado')
+def ultimo_resultado():
+    """
+    Busca o último resultado da Lotofácil e renderiza a página.
+    """
+    ultimo = fetch_lottery_data("ultimo_resultado")
+    if not ultimo:
+        # Opcional: você pode criar um template para erros ou exibir uma mensagem simples
+        return render_template('erro.html', message="Erro ao buscar o último resultado."), 500
+
+    # Certifique-se de que o JSON retornado tenha as chaves: 'data', 'numero_concurso' e 'numeros_sorteados'
+    return render_template('ultimo_resultado.html', result=ultimo)
